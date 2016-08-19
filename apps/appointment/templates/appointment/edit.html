@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Edit</title>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+  </head>
+  <body>
+    <form class="" action="/update/{{app.id}}" method="post">
+      <a href="/">Logout</a>
+      <a href="/appointments">Dashboard</a>
+      {% csrf_token %}
+      <p>
+        Tasks: <input type="text" name="tasks" value="{{app.task}}">
+      </p>
+      <p>
+        Status:
+        <select class="" name="status">
+          <option>Done</option>
+          <option>Pending</option>
+          <option>Missed</option>
+        </select>
+      </p>
+      <p>
+        Date: <input type="date" name="date" value="{{app.date|date:"Y-m-d"}}">
+      </p>
+      <p>
+        Time: <input type="time" name="time" value="{{app.time|time:"H:i"}}">
+      </p>
+      <p>
+        <input type="submit" value="Update">
+      </p>
+    </form>
+    <hr>
+    {% for m in request.session.editmessage %}
+      <p>
+        {{m}}
+      </p>
+    {% endfor %}
+  </body>
+</html>

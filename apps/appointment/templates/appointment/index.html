@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Appointment</title>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+  </head>
+  <body>
+    <h1>Welcome</h1>
+    <h2>Register</h2>
+    <form class="" action="/register" method="post">
+      {% csrf_token %}
+      <p>
+        Name: <input type="text" name="fullname" value="">
+      </p>
+      <p>
+        Email: <input type="text" name="email" value="">
+      </p>
+      <p>
+        Password: <input type="password" name="password" value=""> (8 character or longer)
+      </p>
+      <p>
+        Confirm Password: <input type="password" name="password_confirm" value="">
+      </p>
+      <p>
+        Date of Birth <input type="date" name="date" value="">
+      </p>
+      <p>
+        <input type="submit" value="Register">
+      </p>
+    </form>
+    <hr>
+    <h2>Login</h2>
+    <form class="" action="/login" method="post">
+      {% csrf_token %}
+      <p>
+        Email: <input type="text" name="email" value="">
+      </p>
+      <p>
+        Password: <input type="password" name="password" value="">
+      </p>
+      <p>
+        <input type="submit"  value="login">
+      </p>
+    </form>
+    <hr>
+    {% for m in request.session.message %}
+      <p>
+        {{m}}
+      </p>
+    {% endfor %}
+  </body>
+</html>

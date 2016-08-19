@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Appointments</title>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+  </head>
+  <body>
+    <a href="/">Logout</a>
+    <h1>Hello {{user.name}}!</h1>
+    <p>
+      Here are your appointments for today, {{today_app.date}}:
+    </p>
+    <table>
+      <tr>
+        <th>
+          Tasks
+        </th>
+        <th>
+          Time
+        </th>
+        <th>
+          Status
+        </th>
+        <th>
+          Action
+        </th>
+      </tr>
+      {% for a in today_app %}
+      <tr>
+        <td>
+          {{a.task}}
+        </td>
+        <td>
+          {{a.time}}
+        </td>
+        <td>
+          {{a.status}}
+        </td>
+        <td>
+          {% if a.status != Done %}
+          <a href="/edit/{{a.id}}">Edit</a> <a href="/delete/{{a.id}}">Delete</a>
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+    <hr>
+    <h2>Your other appointments:</h2>
+    <table>
+      <tr>
+        <th>
+          Tasks
+        </th>
+        <th>
+          Date
+        </th>
+        <th>
+          Time
+        </th>
+      </tr>
+      {% for r in other_app %}
+      <tr>
+        <td>
+          {{r.task}}
+        </td>
+        <td>
+          {{r.date|date:'Y-m-d'}}
+        </td>
+        <td>
+          {{r.time}}
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+    <hr>
+    <h2>Add Appointment</h2>
+    <form class="" action="/add" method="post">
+      {% csrf_token %}
+      <p>
+        Date: <input type="date" name="date" value="">
+      </p>
+      <p>
+        Time: <input type="time" name="time" value="">
+      </p>
+      <p>
+        Tasks: <input type="text" name="tasks" value="">
+      </p>
+      <p>
+        <input type="submit" value="Add">
+      </p>
+    </form>
+    <hr>
+    {% for m in request.session.message %}
+      <p>
+        {{m}}
+      </p>
+    {% endfor %}
+  </body>
+</html>
