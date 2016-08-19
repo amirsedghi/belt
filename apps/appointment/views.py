@@ -20,6 +20,7 @@ def index(request):
 def register(request):
     request.session['message']=[]
     request.session['check'] = 1
+    any_user = User.objects.filter(email = request.POST['email'])
     if len(request.POST['fullname'])<1:
         message = "Name cannot be empty"
         request.session['check'] = 0
@@ -36,7 +37,10 @@ def register(request):
         message = 'Password must be 8 characters or longer'
         request.session['message'].insert(0, message)
         request.session['check'] = 0
-
+    if any_user:
+        message = 'This email has already been used'
+        request.session['message'].insert(0, message)
+        request.session['check'] = 0
     if request.session['check'] == 1:
         pw_hash = bcrypt.hashpw(request.POST['password'].encode('utf-8'), bcrypt.gensalt())
         User.objects.create(name = request.POST['fullname'], email = request.POST['email'], password = pw_hash, date_of_birth = request.POST['date'])
@@ -87,8 +91,8 @@ def add(request):
         message = 'Please pick a future date'
         request.session['check'] = 0
         request.session['message'].insert(0, message)
-    # if request.POST['time']<datetime.datetime.now().strftime("%H:%M"):
-    #     message = 'Please pick a future date'
+    # if request.POST['time']<datetime.datetime.now().strftime("%H:%i"):
+    #     message = 'Please pick a future time'
     #     request.session['check'] = 0
     #     request.session['message'].insert(0, message)
     check_app = Appointment.objects.filter(date = request.POST['date'], time = request.POST['time'])

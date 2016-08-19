@@ -39,7 +39,7 @@
           {{a.status}}
         </td>
         <td>
-          {% if a.status != Done %}
+          {% if a.status != 'Done' %}
           <a href="/edit/{{a.id}}">Edit</a> <a href="/delete/{{a.id}}">Delete</a>
           {% endif %}
         </td>
